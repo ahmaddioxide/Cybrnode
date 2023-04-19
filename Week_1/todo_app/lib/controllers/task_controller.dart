@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:hive/hive.dart';
-import 'package:todo_app/controllers/hive_boxex.dart';
+import 'package:todo_app/models/db_helper_tasks.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:get/get.dart';
 
 class TaskController extends GetxController {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  DBHelper? dbHelper;
+  late Future<List<Task>> tasks;
 
   Future<void> showTaskInput(context) async {
     return showDialog(
@@ -68,7 +68,6 @@ class TaskController extends GetxController {
                   child: IconButton(
                       onPressed: () {
                         addTask();
-
                         Get.back();
                       },
                       icon: const Icon(Icons.add))),
@@ -86,12 +85,11 @@ class TaskController extends GetxController {
       time: "${DateTime.now().hour}:${DateTime.now().minute}",
       status: 0,
     );
-    final box = Boxes.getData();
-    box.add(task);
-    task.save();
+
+    dbHelper!.insert(task);
+    tasks = dbHelper!.getTasks();
     titleController.clear();
     descriptionController.clear();
     print("Task Added Successfully");
-    print(box.length);
   }
 }

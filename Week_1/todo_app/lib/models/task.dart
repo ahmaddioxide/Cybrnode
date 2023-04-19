@@ -1,24 +1,35 @@
-import 'package:hive/hive.dart';
-
-part 'task.g.dart';
-
-@HiveType(typeId: 0)
-class Task extends HiveObject {
-  @HiveField(0)
-  String title;
-  @HiveField(1)
-  String description;
-  @HiveField(2)
-  String date;
-  @HiveField(3)
-  String time;
-  @HiveField(4)
-  int status; // 0 - Incomplete, 1 - Complete
+class Task {
+  final int? id;
+  final String? title;
+  final String? description;
+  final String? date;
+  final String? time;
+  final int? status; // 0 - Incomplete, 1 - Complete
 
   Task(
-      {required this.title,
-      required this.description,
-      required this.date,
-      required this.time,
-      required this.status});
+      {this.id,
+      this.title,
+      this.description,
+      this.date,
+      this.time,
+      this.status});
+
+  Task.fromMap(Map<String, dynamic> map)
+      : id = map['id'],
+        title = map['title'],
+        description = map['description'],
+        date = map['date'],
+        time = map['time'],
+        status = map['status'];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'date': date,
+      'time': time,
+      'status': status,
+    };
+  }
 }
