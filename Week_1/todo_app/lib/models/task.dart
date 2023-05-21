@@ -4,15 +4,16 @@ class Task {
   final String? description;
   final String? date;
   final String? time;
-  final int? status; // 0 - Incomplete, 1 - Complete
+  final int? status;
 
-  Task(
-      {this.id,
-      this.title,
-      this.description,
-      this.date,
-      this.time,
-      this.status});
+  Task({
+    this.id,
+    this.title,
+    this.description,
+    this.date,
+    this.time,
+    this.status,
+  });
 
   Task.fromMap(Map<String, dynamic> map)
       : id = map['id'],
